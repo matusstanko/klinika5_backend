@@ -149,7 +149,7 @@ async function sendCancelEmail(toEmail, phone, reservationDetails) {
 
 
 // GET: VSETKY TERMINY
-app.get("/api/get_all_timeslots", async (req, res) => {
+app.get("https://klinika5backend-production.up.railway.app/api/get_all_timeslots", async (req, res) => {
     try {
         // 
         const result = await pool.query("SELECT * FROM time_slots ORDER BY time ASC");
@@ -161,7 +161,7 @@ app.get("/api/get_all_timeslots", async (req, res) => {
 });
 
 // PUT: Vymazat time_slot
-app.delete("/api/delete_timeslot/:id", async (req, res) => {
+app.delete("https://klinika5backend-production.up.railway.app/api/delete_timeslot/:id", async (req, res) => {
     const { id } = req.params;
     console.log("ROUTE delete_timeslot/:id=",id)
     try {
@@ -196,7 +196,7 @@ app.delete("/api/delete_timeslot/:id", async (req, res) => {
 // Vytvorit rezervaciu, token a zmenil status time_slotu
 const crypto = require("crypto"); // Generate a unique cancellation token
 
-app.post("/api/create_reservation", async (req, res) => {
+app.post("https://klinika5backend-production.up.railway.app/api/create_reservation", async (req, res) => {
     const { phone, email, timeslot_id } = req.body;
 
     if (!phone || !email || !timeslot_id) {
@@ -273,7 +273,7 @@ app.post("/api/create_reservation", async (req, res) => {
 
 
 // Vymazat
-app.post("/api/cancel_reservation", async (req, res) => {
+app.post("https://klinika5backend-production.up.railway.app/api/cancel_reservation", async (req, res) => {
     const { cancellation_token } = req.body;
 
     if (!cancellation_token) {
