@@ -9,7 +9,10 @@ const PORT = 3000;
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
+    idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
+    connectionTimeoutMillis: 5000, // Wait 5 seconds for a connection before erroring out
+    keepAlive: true // Keep connection alive
 });
 
 // Pripoj sa na SQL
