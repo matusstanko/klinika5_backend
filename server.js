@@ -10,10 +10,37 @@ const PORT = 3000;
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
-    idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
-    connectionTimeoutMillis: 5000, // Wait 5 seconds for a connection before erroring out
-    keepAlive: true // Keep connection alive
+    max: 10, // Max connections (adjust based on your DB limits)
+    idleTimeoutMillis: 30000, // Close idle connections after 30s
+    connectionTimeoutMillis: 5000, // Wait max 5s for a new connection
+    keepAlive: true // Keep connection active
 });
+pool.on("error", (err) => {
+    console.error("⚠️ Unexpected PostgreSQL connection error!", err);
+    reconnectDatabase(); // Retry connection
+});
+async function reconnectDatabase() {
+    console.log("🔄 Reconnecting to PostgreSQL...");
+    try {
+        await pool.connect();
+        console.log("🟢 Reconnected to PostgreSQL!");
+    } catch (err) {
+        console.error("🔴 Failed to reconnect, retrying in 5s...", err);
+        setTimeout(reconnectDatabase, 5000); // Retry after 5s
+    }
+}
+app.get("/api/health", async (req, res) => {
+    try {
+        await pool.query("SELECT 1"); // Simple DB ping
+        res.json({ status: "🟢 Database Connected" });
+    } catch (err) {
+        res.status(500).json({ status: "🔴 Database Disconnected", error: err.message });
+    }
+});
+
+
+
+
 
 // Pripoj sa na SQL
 pool.connect()
