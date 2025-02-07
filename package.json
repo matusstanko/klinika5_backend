@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-<<<<<<< HEAD
   "description": "Backend for Dental Clinic Reservation System",
   "main": "server.js",
 "scripts": {
@@ -10,15 +9,6 @@
 },
   "keywords": ["backend", "express", "postgresql", "api"],
   "author": "Matus",
-=======
-  "main": "index.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Skipping tests\" && exit 0"
-  },
-  "keywords": [],
-  "author": "",
->>>>>>> 3eb43033c72212b6597ee5dce70fa6356458beaa
   "license": "ISC",
   "repository": {
     "type": "git",
